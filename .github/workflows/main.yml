@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reelsoud - Panel de Administración</title>
+    <style>
+        /* Estilos previos... */
+
+        /* Estilos para dispositivos móviles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            table {
+                font-size: 0.8em;
+            }
+        }
+
+        /* Estilos para dispositivos de escritorio */
+        @media (min-width: 769px) {
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .section {
+                width: 48%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Panel de Administración de Reelsoud</h1>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>Soporte Técnico</h2>
+            <table id="supportTable">
+                <!-- Contenido de la tabla de soporte... -->
+            </table>
+        </div>
+        <div class="section">
+            <h2>Cuentas Registradas</h2>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Fecha de Registro</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas de usuarios se agregarán dinámicamente aquí -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Función para cargar los usuarios registrados
+        function loadRegisteredUsers() {
+            const usersTable = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+            const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            
+            users.forEach((user, index) => {
+                const row = usersTable.insertRow();
+                row.innerHTML = `
+                    <td>#${index + 1}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${new Date().toISOString().split('T')[0]}</td>
+                    <td>Activo</td>
+                `;
+            });
+        }
+
+        // Cargar usuarios al iniciar la página
+        window.onload = loadRegisteredUsers;
+    </script>
+</body>
+</html>
